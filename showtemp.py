@@ -37,7 +37,7 @@ def main():
 	GPIO.setup(DISPLAY_DATA7, GPIO.OUT)
 
 	timestmp = str(datetime.datetime.now().strftime("%H:%M"))
-	log = open("/home/pi/Temperatur/log.dat").readlines()	
+	log = open("/home/pi/Wetterstation/Temperatur/log.dat").readlines()	
 	tmp = float(log[0])
 	hum = float (log[1])
 	display_init()

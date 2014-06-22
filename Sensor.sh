@@ -3,7 +3,7 @@
 while true
 do
 # Im Skript den Ordner wechseln und die Temperaturdaten auslesen
-cd /home/pi/adafruit/Adafruit-Raspberry-Pi-Python-Code-master/Adafruit_DHT_Driver/
+cd /home/pi/Wetterstation/adafruit/Adafruit-Raspberry-Pi-Python-Code-master/Adafruit_DHT_Driver/
 
 WERTE=$(sudo ./Adafruit_DHT 22 2)
 TEMP=( $(echo $WERTE | awk '{print $13}'))
