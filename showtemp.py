@@ -39,9 +39,7 @@ def main():
 	display_init()
 	tmp_old = 0
 	hum_old = 0
-	pat = os.path.abspath(os.curdir)
-	print pat
-	pat = pat + "/Sensor.sh"
+	pat = os.path.abspath(os.curdir) + "/Sensor.sh"
 	print pat
 
 	while True:
