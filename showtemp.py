@@ -37,14 +37,15 @@ def main():
 	GPIO.setup(DISPLAY_DATA7, GPIO.OUT)
 
 	display_init()
-	lcd_byte(DISPLAY_LINE_4, DISPLAY_CMD)
-	lcd_string("-MAKE THINGS BETTER-")
+
 
 	while True:
 		
 		timestmp = str(datetime.datetime.now().strftime("%H:%M"))
 		lcd_byte(DISPLAY_LINE_1, DISPLAY_CMD)
 		lcd_string("Time: " + str(timestmp))
+		lcd_byte(DISPLAY_LINE_4, DISPLAY_CMD)
+		lcd_string("-MAKE THINGS BETTER-")
 
 		log = open("/home/pi/Wetterstation/Temperatur/log.dat").readlines()	
 		if log:
