@@ -37,8 +37,8 @@ def main():
 	GPIO.setup(DISPLAY_DATA6, GPIO.OUT)
 	GPIO.setup(DISPLAY_DATA7, GPIO.OUT)
 	display_init()
-	tmp_o = 0
-	hum_o = 0
+	tmp_old = 0
+	hum_old = 0
 
 	while True:
 		timestmp = str(datetime.datetime.now().strftime("%H:%M"))
@@ -46,30 +46,23 @@ def main():
 		log = open("/home/pi/Wetterstation/Temperatur/log.dat").readlines()	
 		if log:
 			tmp = float(log[0])
-			tmp_o = tmp
+			tmp_old = tmp
 			hum = float (log[1])
-			hum_o = hum
-			lcd_byte(DISPLAY_LINE_1, DISPLAY_CMD)
-      			lcd_string("Time: " + str(timestmp))
-			lcd_byte(DISPLAY_LINE_2, DISPLAY_CMD)
-			lcd_string("Temp: " + str(tmp) + " " + u'\xb0' + "C")
-			lcd_byte(DISPLAY_LINE_3, DISPLAY_CMD)
-			lcd_string("Humidity: " + str(hum) + "%")
-			lcd_byte(DISPLAY_LINE_4, DISPLAY_CMD)
-               		lcd_string("-MAKE THINGS BETTER-")
-			time.sleep(5)
+			hum_old = hum
 		else:
-			lcd_byte(DISPLAY_LINE_1, DISPLAY_CMD)
-			lcd_string("Time: " + str(timestmp))
-			lcd_byte(DISPLAY_LINE_2, DISPLAY_CMD)
-			lcd_string("Temp: " + str(tmp_o) + " " + u'\xb0' + "C")
-			lcd_byte(DISPLAY_LINE_3, DISPLAY_CMD)
-			lcd_string("Humidity: " + str(hum_o) + "%")
-			lcd_byte(DISPLAY_LINE_4, DISPLAY_CMD)
-			lcd_string("-MAKE THINGS BETTER-")
-			time.sleep(5)
-
-
+			tmp = tmp_old
+			hum = hum_old
+			
+		lcd_byte(DISPLAY_LINE_1, DISPLAY_CMD)
+      	lcd_string("Time: " + str(timestmp))
+		lcd_byte(DISPLAY_LINE_2, DISPLAY_CMD)
+		lcd_string("Temp: " + str(tmp) + " " + u'\xb0' + "C")
+		lcd_byte(DISPLAY_LINE_3, DISPLAY_CMD)
+		lcd_string("Humidity: " + str(hum) + "%")
+		lcd_byte(DISPLAY_LINE_4, DISPLAY_CMD)
+        lcd_string("-MAKE THINGS BETTER-")
+		time.sleep(5)
+		
 
 
 
