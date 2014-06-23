@@ -54,13 +54,13 @@ def main():
 			hum = hum_old
 			
 		lcd_byte(DISPLAY_LINE_1, DISPLAY_CMD)
-      	lcd_string("Time: " + str(timestmp))
+	      	lcd_string("Time: " + str(timestmp))
 		lcd_byte(DISPLAY_LINE_2, DISPLAY_CMD)
 		lcd_string("Temp: " + str(tmp) + " " + u'\xb0' + "C")
 		lcd_byte(DISPLAY_LINE_3, DISPLAY_CMD)
 		lcd_string("Humidity: " + str(hum) + "%")
 		lcd_byte(DISPLAY_LINE_4, DISPLAY_CMD)
-        lcd_string("-MAKE THINGS BETTER-")
+        	lcd_string("-MAKE THINGS BETTER-")
 		time.sleep(5)
 		
 
