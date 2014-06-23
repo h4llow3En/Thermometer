@@ -3,6 +3,7 @@
 import time
 import datetime
 import os
+import thread
 import RPi.GPIO as GPIO
 
 # Zuordnung der GPIO Pins (ggf. anpassen)
@@ -39,14 +40,12 @@ def main():
 	display_init()
 	tmp_old = 0
 	hum_old = 0
-	pat = os.path.abspath(os.curdir) + "/Sensor.sh"
-	print pat
+	path = os.path.abspath(os.curdir) + "/Sensor.sh"
 
 	while True:
 		timestmp = str(datetime.datetime.now().strftime("%H:%M"))
 		
-		log = open("/home/pi/Wetterstation/Temperatur/log.dat").readlines()	
-		print log
+		log = open("/home/pi/Wetterstation/Temperatur/log.dat").readlines()
 		if (log[0] != '') and (log[0] != '\n') :
 			tmp = float(log[0])
 			tmp_old = tmp
@@ -64,7 +63,7 @@ def main():
 		lcd_string("Humidity: " + str(hum) + "%")
 		lcd_byte(DISPLAY_LINE_4, DISPLAY_CMD)
         	lcd_string("-MAKE THINGS BETTER-")
-		os.system(pat)
+		os.system(path)
 		time.sleep(5)
 		
 
