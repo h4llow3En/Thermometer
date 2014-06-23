@@ -41,22 +41,23 @@ def main():
 	tmp_old = 0
 	hum_old = 0
 	count = 0
-	a = 0
-	b = 19
+	a = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
 	path = os.path.abspath(os.curdir)
 	path_s = path + "/Sensor.sh"
 	path_l = path + "/Temperatur/log.dat"
-	path_t = path + "text.txt"
-	text = open(path_t).read()
+	path_t = path + "/text.txt"
+	text = open(path_t).read() + '                   '
 	length = len(text)
 
 	while True:
-		
-		if count = 0:
+		txt = ''
+		x = 0	
+		if count == 0:
 
 			timestmp = str(datetime.datetime.now().strftime("%H:%M"))
+			os.system(path_s)
 			log = open(path_l).readlines()
-			if (log[0] != '') and (log[0] != '\n') :
+			if (log[0] != '') and (log[0] != '\n'):
 				tmp = float(log[0])
 				tmp_old = tmp
 				hum = float (log[1])
@@ -66,20 +67,22 @@ def main():
 				hum = hum_old
 				
 			lcd_byte(DISPLAY_LINE_1, DISPLAY_CMD)
-		    lcd_string("Time: " + str(timestmp))
+	                lcd_string("Time: " + str(timestmp))
 			lcd_byte(DISPLAY_LINE_2, DISPLAY_CMD)
 			lcd_string("Temp: " + str(tmp) + " " + u'\xb0' + "C")
 			lcd_byte(DISPLAY_LINE_3, DISPLAY_CMD)
 			lcd_string("Humidity: " + str(hum) + "%")
-			os.system(path_s)
+		
+		for x in range(0,20):
+			a[x] = a[x] % length
+			txt = txt + text[a[x]]
+			a[x] = a[x] +1
 
 		lcd_byte(DISPLAY_LINE_4, DISPLAY_CMD)
-    	lcd_string(str(text[a:b]))
-    	a = (a + 1) % length
-    	b = (b + 1) % length
+    		lcd_string(str(txt))
 
-		time.sleep(1)
-		count = (count + 1) %5		
+		time.sleep(0.5)
+		count = (count + 1) % 10		
 
 
 
