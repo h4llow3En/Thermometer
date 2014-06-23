@@ -1,7 +1,7 @@
 #!/bin/bash
 #Aktuelles Datum mit Uhrzeit einer Variablen zuweisen
-while true
-do
+#while true
+#do
 # Im Skript den Ordner wechseln und die Temperaturdaten auslesen
 cd /home/pi/Wetterstation/adafruit/Adafruit_DHT_Driver/
 
@@ -12,4 +12,4 @@ LUFT=( $(echo $WERTE | awk '{print $17}'))
 # Ausgabe semikolonsepariert in Datei
 echo "$TEMP" > /home/pi/Wetterstation/Temperatur/log.dat
 echo "$LUFT" >> /home/pi/Wetterstation/Temperatur/log.dat
-done
+#done

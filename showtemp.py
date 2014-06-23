@@ -39,12 +39,17 @@ def main():
 	display_init()
 	tmp_old = 0
 	hum_old = 0
+	pat = os.path.abspath(os.curdir)
+	print pat
+	pat = pat + "/Sensor.sh"
+	print pat
 
 	while True:
 		timestmp = str(datetime.datetime.now().strftime("%H:%M"))
 		
 		log = open("/home/pi/Wetterstation/Temperatur/log.dat").readlines()	
-		if log:
+		print log
+		if (log[0] != '') and (log[0] != '\n') :
 			tmp = float(log[0])
 			tmp_old = tmp
 			hum = float (log[1])
@@ -61,6 +66,7 @@ def main():
 		lcd_string("Humidity: " + str(hum) + "%")
 		lcd_byte(DISPLAY_LINE_4, DISPLAY_CMD)
         	lcd_string("-MAKE THINGS BETTER-")
+		os.system(pat)
 		time.sleep(5)
 		
 
