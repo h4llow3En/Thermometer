@@ -40,32 +40,46 @@ def main():
 	display_init()
 	tmp_old = 0
 	hum_old = 0
-	path = os.path.abspath(os.curdir) + "/Sensor.sh"
+	count = 0
+	a = 0
+	b = 19
+	path = os.path.abspath(os.curdir)
+	path_s = path + "/Sensor.sh"
+	path_l = path + "/Temperatur/log.dat"
+	path_t = path + "text.txt"
+	text = open(path_t).read()
+	length = len(text)
 
 	while True:
-		timestmp = str(datetime.datetime.now().strftime("%H:%M"))
 		
-		log = open("/home/pi/Wetterstation/Temperatur/log.dat").readlines()
-		if (log[0] != '') and (log[0] != '\n') :
-			tmp = float(log[0])
-			tmp_old = tmp
-			hum = float (log[1])
-			hum_old = hum
-		else:
-			tmp = tmp_old
-			hum = hum_old
-			
-		lcd_byte(DISPLAY_LINE_1, DISPLAY_CMD)
-	      	lcd_string("Time: " + str(timestmp))
-		lcd_byte(DISPLAY_LINE_2, DISPLAY_CMD)
-		lcd_string("Temp: " + str(tmp) + " " + u'\xb0' + "C")
-		lcd_byte(DISPLAY_LINE_3, DISPLAY_CMD)
-		lcd_string("Humidity: " + str(hum) + "%")
+		if count = 0:
+
+			timestmp = str(datetime.datetime.now().strftime("%H:%M"))
+			log = open(path_l).readlines()
+			if (log[0] != '') and (log[0] != '\n') :
+				tmp = float(log[0])
+				tmp_old = tmp
+				hum = float (log[1])
+				hum_old = hum
+			else:
+				tmp = tmp_old
+				hum = hum_old
+				
+			lcd_byte(DISPLAY_LINE_1, DISPLAY_CMD)
+		    lcd_string("Time: " + str(timestmp))
+			lcd_byte(DISPLAY_LINE_2, DISPLAY_CMD)
+			lcd_string("Temp: " + str(tmp) + " " + u'\xb0' + "C")
+			lcd_byte(DISPLAY_LINE_3, DISPLAY_CMD)
+			lcd_string("Humidity: " + str(hum) + "%")
+			os.system(path_s)
+
 		lcd_byte(DISPLAY_LINE_4, DISPLAY_CMD)
-        	lcd_string("-MAKE THINGS BETTER-")
-		os.system(path)
-		time.sleep(5)
-		
+    	lcd_string(str(text[a:b]))
+    	a = (a + 1) % length
+    	b = (b + 1) % length
+
+		time.sleep(1)
+		count = (count + 1) %5		
 
 
 
