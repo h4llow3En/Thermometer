@@ -10,6 +10,6 @@ TEMP=( $(echo $WERTE | awk '{print $13}'))
 LUFT=( $(echo $WERTE | awk '{print $17}'))
 
 # Ausgabe semikolonsepariert in Datei
-echo "$TEMP" > /home/pi/Temperatur/log.dat
-echo "$LUFT" >> /home/pi/Temperatur/log.dat
+echo "$TEMP" > /home/pi/Wetterstation/Temperatur/log.dat
+echo "$LUFT" >> /home/pi/Wetterstation/Temperatur/log.dat
 done
