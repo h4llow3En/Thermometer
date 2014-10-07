@@ -8,133 +8,132 @@ import RPi.GPIO as GPIO
 
 # Zuordnung der GPIO Pins (ggf. anpassen)
 DISPLAY_RS = 7
-DISPLAY_E  = 8
-DISPLAY_DATA4 = 25 
+DISPLAY_E = 8
+DISPLAY_DATA4 = 25
 DISPLAY_DATA5 = 24
 DISPLAY_DATA6 = 23
 DISPLAY_DATA7 = 18
 
-
-
-
-DISPLAY_WIDTH = 20 	# Zeichen je Zeile
-DISPLAY_LINE_1 = 0x80 	# Adresse der ersten Display Zeile
-DISPLAY_LINE_2 = 0xC0 	# Adresse der zweiten Display Zeile
-DISPLAY_LINE_3 = 0x94   # Adresse der dritten Display Zeile
-DISPLAY_LINE_4 = 0xD4   # Adresse der vierten Display Zeile
+DISPLAY_WIDTH = 20  # Zeichen je Zeile
+DISPLAY_LINE_1 = 0x80  # Adresse der ersten Display Zeile
+DISPLAY_LINE_2 = 0xC0  # Adresse der zweiten Display Zeile
+DISPLAY_LINE_3 = 0x94  # Adresse der dritten Display Zeile
+DISPLAY_LINE_4 = 0xD4  # Adresse der vierten Display Zeile
 DISPLAY_CHR = True
 DISPLAY_CMD = False
 E_PULSE = 0.00005
 E_DELAY = 0.00005
 
 
+def marquee():
+    text_path = os.path.abspath(os.curdir) + 'text.txt'
+    text = open(text_path).read() + " "
+    length = len(text)
+    a = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+    while True:
+        text_show = ''
+        x = 0
+        for x in range(0, 20, ):
+            a[x] = a[x] % length
+            text_show = text_show + text[a[x]]
+            a[x] = a[x] + 1
+        lcd_byte(DISPLAY_LINE_4, DISPLAY_CMD)
+        lcd_string(str(text_show))
+
+
 def main():
-	GPIO.setwarnings(False)
-	GPIO.setmode(GPIO.BCM)
-	GPIO.setup(DISPLAY_E, GPIO.OUT)
-	GPIO.setup(DISPLAY_RS, GPIO.OUT)
-	GPIO.setup(DISPLAY_DATA4, GPIO.OUT)
-	GPIO.setup(DISPLAY_DATA5, GPIO.OUT)
-	GPIO.setup(DISPLAY_DATA6, GPIO.OUT)
-	GPIO.setup(DISPLAY_DATA7, GPIO.OUT)
-	display_init()
-	tmp_old = 0
-	hum_old = 0
-	count = 0
-	a = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
-	path = os.path.abspath(os.curdir)
-	path_s = path + "/Sensor.sh"
-	path_l = path + "/Temperatur/log.dat"
-	path_t = path + "/text.txt"
-	text = open(path_t).read() + '                   '
-	length = len(text)
+    GPIO.setwarnings(False)
+    GPIO.setmode(GPIO.BCM)
+    GPIO.setup(DISPLAY_E, GPIO.OUT)
+    GPIO.setup(DISPLAY_RS, GPIO.OUT)
+    GPIO.setup(DISPLAY_DATA4, GPIO.OUT)
+    GPIO.setup(DISPLAY_DATA5, GPIO.OUT)
+    GPIO.setup(DISPLAY_DATA6, GPIO.OUT)
+    GPIO.setup(DISPLAY_DATA7, GPIO.OUT)
+    display_init()
+    tmp_old = 0
+    hum_old = 0
+    count = 0
+    path = os.path.abspath(os.curdir)
+    path_s = path + "/Sensor.sh"
+    path_l = path + "/Temp/log.dat"
 
-	while True:
-		txt = ''
-		x = 0	
-		if count == 0:
+    while True:
 
-			timestmp = str(datetime.datetime.now().strftime("%H:%M"))
-			os.system(path_s)
-			log = open(path_l).readlines()
-			if (log[0] != '') and (log[0] != '\n'):
-				tmp = float(log[0])
-				tmp_old = tmp
-				hum = float (log[1])
-				hum_old = hum
-			else:
-				tmp = tmp_old
-				hum = hum_old
-				
-			lcd_byte(DISPLAY_LINE_1, DISPLAY_CMD)
-	                lcd_string("Time: " + str(timestmp))
-			lcd_byte(DISPLAY_LINE_2, DISPLAY_CMD)
-			lcd_string("Temp: " + str(tmp) + " " + u'\xb0' + "C")
-			lcd_byte(DISPLAY_LINE_3, DISPLAY_CMD)
-			lcd_string("Humidity: " + str(hum) + "%")
-		
-		for x in range(0,20):
-			a[x] = a[x] % length
-			txt = txt + text[a[x]]
-			a[x] = a[x] +1
+        timestemp = str(datetime.datetime.now().strftime("%H:%M"))
+        os.system(path_s)
+        log = open(path_l).readlines()
+        if (log[0] != '') and (log[0] != '\n') and (log[1] != '') and (log[1] != '\n'):
+            tmp = float(log[0])
+            tmp_old = tmp
+            hum = float(log[1])
+            hum_old = hum
+        else:
+            tmp = tmp_old
+            hum = hum_old
 
-		lcd_byte(DISPLAY_LINE_4, DISPLAY_CMD)
-    		lcd_string(str(txt))
+        lcd_byte(DISPLAY_LINE_1, DISPLAY_CMD)
+        lcd_string("Time: " + str(timestemp))
+        lcd_byte(DISPLAY_LINE_2, DISPLAY_CMD)
+        lcd_string("Temp: " + str(tmp) + " " + u'\xb0' + "C")
+        lcd_byte(DISPLAY_LINE_3, DISPLAY_CMD)
+        lcd_string("Humidity: " + str(hum) + "%")
 
-		time.sleep(0.5)
-		count = (count + 1) % 10		
-
+    time.sleep(10)
 
 
 def display_init():
-	lcd_byte(0x33,DISPLAY_CMD)
-	lcd_byte(0x32,DISPLAY_CMD)
-	lcd_byte(0x28,DISPLAY_CMD)
-	lcd_byte(0x0C,DISPLAY_CMD)  
-	lcd_byte(0x06,DISPLAY_CMD)
-	lcd_byte(0x01,DISPLAY_CMD)  
+    lcd_byte(0x33, DISPLAY_CMD)
+    lcd_byte(0x32, DISPLAY_CMD)
+    lcd_byte(0x28, DISPLAY_CMD)
+    lcd_byte(0x0C, DISPLAY_CMD)
+    lcd_byte(0x06, DISPLAY_CMD)
+    lcd_byte(0x01, DISPLAY_CMD)
+
 
 def lcd_string(message):
-	message = message.ljust(DISPLAY_WIDTH," ")  
-	for i in range(DISPLAY_WIDTH):
-	  lcd_byte(ord(message[i]),DISPLAY_CHR)
+    message = message.ljust(DISPLAY_WIDTH, " ")
+    for i in range(DISPLAY_WIDTH):
+        lcd_byte(ord(message[i]), DISPLAY_CHR)
+
 
 def lcd_byte(bits, mode):
-	GPIO.output(DISPLAY_RS, mode)
-	GPIO.output(DISPLAY_DATA4, False)
-	GPIO.output(DISPLAY_DATA5, False)
-	GPIO.output(DISPLAY_DATA6, False)
-	GPIO.output(DISPLAY_DATA7, False)
-	if bits&0x10==0x10:
-	  GPIO.output(DISPLAY_DATA4, True)
-	if bits&0x20==0x20:
-	  GPIO.output(DISPLAY_DATA5, True)
-	if bits&0x40==0x40:
-	  GPIO.output(DISPLAY_DATA6, True)
-	if bits&0x80==0x80:
-	  GPIO.output(DISPLAY_DATA7, True)
-	time.sleep(E_DELAY)    
-	GPIO.output(DISPLAY_E, True)  
-	time.sleep(E_PULSE)
-	GPIO.output(DISPLAY_E, False)  
-	time.sleep(E_DELAY)      
-	GPIO.output(DISPLAY_DATA4, False)
-	GPIO.output(DISPLAY_DATA5, False)
-	GPIO.output(DISPLAY_DATA6, False)
-	GPIO.output(DISPLAY_DATA7, False)
-	if bits&0x01==0x01:
-	  GPIO.output(DISPLAY_DATA4, True)
-	if bits&0x02==0x02:
-	  GPIO.output(DISPLAY_DATA5, True)
-	if bits&0x04==0x04:
-	  GPIO.output(DISPLAY_DATA6, True)
-	if bits&0x08==0x08:
-	  GPIO.output(DISPLAY_DATA7, True)
-	time.sleep(E_DELAY)    
-	GPIO.output(DISPLAY_E, True)  
-	time.sleep(E_PULSE)
-	GPIO.output(DISPLAY_E, False)  
-	time.sleep(E_DELAY)   
+    GPIO.output(DISPLAY_RS, mode)
+    GPIO.output(DISPLAY_DATA4, False)
+    GPIO.output(DISPLAY_DATA5, False)
+    GPIO.output(DISPLAY_DATA6, False)
+    GPIO.output(DISPLAY_DATA7, False)
+    if bits & 0x10 == 0x10:
+        GPIO.output(DISPLAY_DATA4, True)
+    if bits & 0x20 == 0x20:
+        GPIO.output(DISPLAY_DATA5, True)
+    if bits & 0x40 == 0x40:
+        GPIO.output(DISPLAY_DATA6, True)
+    if bits & 0x80 == 0x80:
+        GPIO.output(DISPLAY_DATA7, True)
+    time.sleep(E_DELAY)
+    GPIO.output(DISPLAY_E, True)
+    time.sleep(E_PULSE)
+    GPIO.output(DISPLAY_E, False)
+    time.sleep(E_DELAY)
+    GPIO.output(DISPLAY_DATA4, False)
+    GPIO.output(DISPLAY_DATA5, False)
+    GPIO.output(DISPLAY_DATA6, False)
+    GPIO.output(DISPLAY_DATA7, False)
+    if bits & 0x01 == 0x01:
+        GPIO.output(DISPLAY_DATA4, True)
+    if bits & 0x02 == 0x02:
+        GPIO.output(DISPLAY_DATA5, True)
+    if bits & 0x04 == 0x04:
+        GPIO.output(DISPLAY_DATA6, True)
+    if bits & 0x08 == 0x08:
+        GPIO.output(DISPLAY_DATA7, True)
+    time.sleep(E_DELAY)
+    GPIO.output(DISPLAY_E, True)
+    time.sleep(E_PULSE)
+    GPIO.output(DISPLAY_E, False)
+    time.sleep(E_DELAY)
+
 
 if __name__ == '__main__':
-	main()
+    main()
