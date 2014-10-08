@@ -4,6 +4,7 @@ import time
 import datetime
 import os
 import thread
+import welcome
 import RPi.GPIO as GPIO
 
 # Zuordnung der GPIO Pins (ggf. anpassen)
@@ -25,9 +26,6 @@ E_PULSE = 0.00005
 E_DELAY = 0.00005
 
 
-
-
-
 def main():
     GPIO.setwarnings(False)
     GPIO.setmode(GPIO.BCM)
@@ -39,8 +37,10 @@ def main():
     GPIO.setup(DISPLAY_DATA7, GPIO.OUT)
     display_init()
     dir = os.path.abspath(os.curdir)
+    welcome_screen()
     thread.start_new_thread(sensor(dir))
     thread.start_new_thread(marquee(dir))
+
 
 def sensor(dir):
     tmp_old = 0
@@ -62,18 +62,12 @@ def sensor(dir):
             tmp = tmp_old
             hum = hum_old
 
-
         display_out(1, "Time: " + str(timestamp))
         display_out(2, "Temp: " + str(tmp) + " " + u'\xb0' + "C")
         display_out(3, "Humidity: " + str(hum) + "%")
-#        lcd_byte(DISPLAY_LINE_1, DISPLAY_CMD)
-#        lcd_string("Time: " + str(timestamp))
-#        lcd_byte(DISPLAY_LINE_2, DISPLAY_CMD)
-#        lcd_string("Temp: " + str(tmp) + " " + u'\xb0' + "C")
-#        lcd_byte(DISPLAY_LINE_3, DISPLAY_CMD)
-#        lcd_string("Humidity: " + str(hum) + "%")
 
     time.sleep(10)
+
 
 def marquee(dir):
     text_path = dir + '/text.txt'
@@ -90,6 +84,7 @@ def marquee(dir):
         display_out(4, str(text_show))
 
         time.sleep(0.5)
+
 
 def display_out(line, string):
     if (line == 1):
