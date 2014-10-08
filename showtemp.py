@@ -25,20 +25,7 @@ E_PULSE = 0.00005
 E_DELAY = 0.00005
 
 
-def marquee():
-    text_path = os.path.abspath(os.curdir) + 'text.txt'
-    text = open(text_path).read() + " "
-    length = len(text)
-    a = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
-    while True:
-        text_show = ''
-        x = 0
-        for x in range(0, 20, ):
-            a[x] = a[x] % length
-            text_show = text_show + text[a[x]]
-            a[x] = a[x] + 1
-        lcd_byte(DISPLAY_LINE_4, DISPLAY_CMD)
-        lcd_string(str(text_show))
+
 
 
 def main():
@@ -53,14 +40,16 @@ def main():
     display_init()
     tmp_old = 0
     hum_old = 0
-    count = 0
-    path = os.path.abspath(os.curdir)
-    path_s = path + "/Sensor.sh"
-    path_l = path + "/Temp/log.dat"
+    dir = os.path.abspath(os.curdir)
+
+
+def sensor(dir):
+    path_s = dir + "/Sensor.sh"
+    path_l = dir + "/Temp/log.dat"
 
     while True:
 
-        timestemp = str(datetime.datetime.now().strftime("%H:%M"))
+        timestamp = str(datetime.datetime.now().strftime("%H:%M"))
         os.system(path_s)
         log = open(path_l).readlines()
         if (log[0] != '') and (log[0] != '\n') and (log[1] != '') and (log[1] != '\n'):
@@ -72,14 +61,47 @@ def main():
             tmp = tmp_old
             hum = hum_old
 
-        lcd_byte(DISPLAY_LINE_1, DISPLAY_CMD)
-        lcd_string("Time: " + str(timestemp))
-        lcd_byte(DISPLAY_LINE_2, DISPLAY_CMD)
-        lcd_string("Temp: " + str(tmp) + " " + u'\xb0' + "C")
-        lcd_byte(DISPLAY_LINE_3, DISPLAY_CMD)
-        lcd_string("Humidity: " + str(hum) + "%")
+
+        display_out(1, "Time: " + str(timestamp))
+        display_out(2, "Temp: " + str(tmp) + " " + u'\xb0' + "C")
+        display_out(3, "Humidity: " + str(hum) + "%")
+#        lcd_byte(DISPLAY_LINE_1, DISPLAY_CMD)
+#        lcd_string("Time: " + str(timestamp))
+#        lcd_byte(DISPLAY_LINE_2, DISPLAY_CMD)
+#        lcd_string("Temp: " + str(tmp) + " " + u'\xb0' + "C")
+#        lcd_byte(DISPLAY_LINE_3, DISPLAY_CMD)
+#        lcd_string("Humidity: " + str(hum) + "%")
 
     time.sleep(10)
+
+def marquee(dir):
+    text_path = dir + '/text.txt'
+    text = open(text_path).read() + " "
+    length = len(text)
+    a = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+    while True:
+        text_show = ''
+        x = 0
+        for x in range(0, 20, ):
+            a[x] = a[x] % length
+            text_show = text_show + text[a[x]]
+            a[x] = a[x] + 1
+        display_out(4, str(text_show))
+
+        time.sleep(0.5)
+
+def display_out(line, string):
+    if (line == 1):
+        ln = DISPLAY_LINE_1
+    elif (line == 2):
+        ln = DISPLAY_LINE_2
+    elif (line == 3):
+        ln = DISPLAY_LINE_3
+    elif (line == 4):
+        ln = DISPLAY_LINE_4
+
+    lcd_byte(ln, DISPLAY_CMD)
+    lcd_string(string)
 
 
 def display_init():
