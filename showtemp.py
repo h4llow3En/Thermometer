@@ -38,12 +38,13 @@ def main():
     GPIO.setup(DISPLAY_DATA6, GPIO.OUT)
     GPIO.setup(DISPLAY_DATA7, GPIO.OUT)
     display_init()
-    tmp_old = 0
-    hum_old = 0
     dir = os.path.abspath(os.curdir)
-
+    thread.start_new_thread(sensor(dir))
+    thread.start_new_thread(marquee(dir))
 
 def sensor(dir):
+    tmp_old = 0
+    hum_old = 0
     path_s = dir + "/Sensor.sh"
     path_l = dir + "/Temp/log.dat"
 
