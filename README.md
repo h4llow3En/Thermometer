@@ -17,3 +17,4 @@ Ziel dieses Projeks ist eine Python basierte Umsetzung, die Daten des Adafruit D
 * Optionale Moeglichkeiten fuer die 4. Zeile einrichten (z.B. Temp-Differenz,...)
 * Einfaches Konfigurationsscrip fuer "Modulauswahl"
 * Umstellung der Sensordatenerfassung auf Python
+* Hardwareanleitung
