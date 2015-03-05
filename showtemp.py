@@ -37,7 +37,7 @@ def main():
     GPIO.setup(DISPLAY_DATA7, GPIO.OUT)
     display_init()
     dir = os.path.abspath(os.curdir)
-    welcome_screen()
+    welcome.welcome_screen()
     thread.start_new_thread(sensor(dir))
     thread.start_new_thread(marquee(dir))
 
