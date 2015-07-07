@@ -1,6 +1,27 @@
 __author__ = 'h4llow3En'
 
 
+import RPi.GPIO as GPIO
+
+# Zuordnung der GPIO Pins (ggf. anpassen)
+DISPLAY_RS = 7
+DISPLAY_E = 8
+DISPLAY_DATA4 = 25
+DISPLAY_DATA5 = 24
+DISPLAY_DATA6 = 23
+DISPLAY_DATA7 = 18
+
+DISPLAY_WIDTH = 20
+DISPLAY_LINE_1 = 0x80
+DISPLAY_LINE_2 = 0xC0
+DISPLAY_LINE_3 = 0x94
+DISPLAY_LINE_4 = 0xD4
+DISPLAY_CHR = True
+DISPLAY_CMD = False
+E_PULSE = 0.00005
+E_DELAY = 0.00005
+
+
 def output(time, temp, hum, tempdiff=[]):
 
     strtime = "Time: {}".format(time)
@@ -25,6 +46,16 @@ def output(time, temp, hum, tempdiff=[]):
     for value in tempdiff:
         lcd_byte(value, DISPLAY_CMD)
 
+
+def start():
+    GPIO.setwarnings(False)
+    GPIO.setmode(GPIO.BCM)
+    GPIO.setup(DISPLAY_E, GPIO.OUT)
+    GPIO.setup(DISPLAY_RS, GPIO.OUT)
+    GPIO.setup(DISPLAY_DATA4, GPIO.OUT)
+    GPIO.setup(DISPLAY_DATA5, GPIO.OUT)
+    GPIO.setup(DISPLAY_DATA6, GPIO.OUT)
+    GPIO.setup(DISPLAY_DATA7, GPIO.OUT)
 
 
 def display_init():
