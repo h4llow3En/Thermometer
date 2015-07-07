@@ -2,6 +2,7 @@ __author__ = 'h4llow3En'
 
 
 import RPi.GPIO as GPIO
+import time
 
 # Zuordnung der GPIO Pins (ggf. anpassen)
 DISPLAY_RS = 7
