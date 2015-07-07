@@ -1,8 +1,11 @@
 __author__ = 'h4llow3En'
 
+from display import *
+
 def welcome_screen():
-    display_out(1, "Wetterstation BETA")
-    display_out(2, "Welcome back!")
-    display_out(4, "Copyright 2014 by Felix Doering")
+    lcd_byte(DISPLAY_LINE_1, DISPLAY_CMD)
+    lcd_string("Wetterstation BETA")
+    lcd_byte(DISPLAY_LINE_3, DISPLAY_CMD)
+    lcd_string("Copyright 2014 by Felix Doering")
 
     time.sleep(5)

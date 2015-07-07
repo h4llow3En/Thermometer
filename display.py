@@ -37,7 +37,7 @@ def output(time, temp, hum, tempdiff=[]):
     #  Temperature and degree Celsius Sign on second Line
     lcd_byte(DISPLAY_LINE_2, DISPLAY_CMD)
     lcd_string(strtemp)
-    lcd_byte(0, DISPLAY_CMD)
+    #  lcd_byte(0, DISPLAY_CMD)
     print strtemp
 
     #  Humidity on third Line

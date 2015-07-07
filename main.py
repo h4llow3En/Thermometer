@@ -8,6 +8,7 @@ import datetime
 import display
 import temperature
 import imp
+import welcome
 
 # custom characters
 degree = 0
@@ -26,10 +27,11 @@ def main():
     check_setup()
     display.start()
     display.display_init()
-    display.create_char(0x40, degree_pat)
-    display.create_char(0x41, arrow_up_pat)
-    display.create_char(0x42, arrow_down_pat)
+    #  display.create_char(0x40, degree_pat)
+    #  display.create_char(0x41, arrow_up_pat)
+    #  display.create_char(0x42, arrow_down_pat)
     temperature.dht_init()
+    welcome.welcome_screen()
     run()
 
 
