@@ -29,13 +29,20 @@ def main():
     display.create_char(0x40, degree_pat)
     display.create_char(0x41, arrow_up_pat)
     display.create_char(0x42, arrow_down_pat)
+    temperature.dht_init()
     run()
 
 
 def run():
+    old_temp = 0
+    old_hum = 0
     while True:
         timestamp = str(datetime.datetime.now().strftime("%H:%M"))
-        temp, hum = temperature.get_data(dht, pin)
+        try:
+            temp, hum = temperature.get_data(dht, pin)
+            old_temp, old_hum = temp, hum
+        except TypeError:
+            temp, hum = old_temp, old_hum
         display.output(time=timestamp, temp=temp, hum=hum)
         time.sleep(5)
 

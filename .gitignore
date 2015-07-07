@@ -1,4 +1,2 @@
-Temp/
-adafruit/
-text.txt
+*.pyc
 .idea/
