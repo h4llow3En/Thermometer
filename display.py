@@ -32,15 +32,18 @@ def output(time, temp, hum, tempdiff=[]):
     #  Time on first line
     lcd_byte(DISPLAY_LINE_1, DISPLAY_CMD)
     lcd_string(strtime)
+    print strtime
 
     #  Temperature and degree Celsius Sign on second Line
     lcd_byte(DISPLAY_LINE_2, DISPLAY_CMD)
     lcd_string(strtemp)
     lcd_byte(0, DISPLAY_CMD)
+    print strtemp
 
     #  Humidity on third Line
     lcd_byte(DISPLAY_LINE_3, DISPLAY_CMD)
     lcd_string(strhum)
+    print strhum
 
     # Show tempdiff if avaidable
     lcd_byte(DISPLAY_LINE_4, DISPLAY_CMD)

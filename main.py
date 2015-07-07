@@ -29,6 +29,7 @@ def main():
     display.create_char(0x40, degree_pat)
     display.create_char(0x41, arrow_up_pat)
     display.create_char(0x42, arrow_down_pat)
+    run()
 
 
 def run():
