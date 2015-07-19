@@ -10,12 +10,33 @@ import temperature
 import imp
 
 # custom characters
-degree = 0
-degree_pat = [8,20,8,6,9,8,9,6]
-arrow_up = 1
-arrow_up_pat = [0,15,3,5,9,16,0,0]
-arrow_down = 2
-arrow_down_pat = [0,16,9,5,3,15,0,0]
+degree_pat = (
+    0b01000,
+    0b10100,
+    0b01000,
+    0b00011,
+    0b00100,
+    0b00100,
+    0b00100,
+    0b00011)
+arrow_up_pat = (
+    0b00000,
+    0b01111,
+    0b00011,
+    0b00101,
+    0b01001,
+    0b10000,
+    0b00000,
+    0b00000)
+arrow_down_pat = (
+    0b00000,
+    0b10000,
+    0b01001,
+    0b00101,
+    0b00011,
+    0b01111,
+    0b00000,
+    0b00000)
 
 # sensor config
 dht = 22
@@ -24,28 +45,29 @@ pin = 4
 
 def main():
     check_setup()
-    display.start()
-    display.display_init()
-    #  display.create_char(0x40, degree_pat)
-    #  display.create_char(0x41, arrow_up_pat)
-    #  display.create_char(0x42, arrow_down_pat)
+    lcd = display.HD44780()
+    lcd.create_char(0, degree_pat)
+    lcd.create_char(1, arrow_up_pat)
+    lcd.create_char(2, arrow_down_pat)
     temperature.dht_init()
-    display.welcome_screen()
-    time.sleep(5)
-    run()
+    run(lcd)
 
 
-def run():
+def run(lcd):
     old_temp = 0
     old_hum = 0
     while True:
         timestamp = str(datetime.datetime.now().strftime("%H:%M"))
         try:
             temp, hum = temperature.get_data(dht, pin)
+            temp, hum = float(int(temp*10))/10, float(int(hum*10))/10
             old_temp, old_hum = temp, hum
         except TypeError:
             temp, hum = old_temp, old_hum
-        display.output(time=timestamp, temp=temp, hum=hum)
+
+        lcd.send_string(timestamp, row=0)
+        lcd.send_string("Temp: {} \cg:0".format(temp), row=1)
+        lcd.send_string("Humidity: {} %".format(temp))
         time.sleep(5)
 
 

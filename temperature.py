@@ -7,5 +7,4 @@ def dht_init():
 
 def get_data(dht, pin):
     data = str(dhtreader.read(dht, pin))
-    print data
     return eval(data)
