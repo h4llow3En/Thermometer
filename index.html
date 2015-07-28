@@ -1,0 +1,136 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Thermometer by h4llow3En</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-light.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Thermometer</h1>
+        <p>Turn your Raspberry Pi into a Thermometer</p>
+
+        <p class="view"><a href="https://github.com/h4llow3En/Thermometer">View the Project on GitHub <small>h4llow3En/Thermometer</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/h4llow3En/Thermometer/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/h4llow3En/Thermometer/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/h4llow3En/Thermometer">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a id="thermometer" class="anchor" href="#thermometer" aria-hidden="true"><span class="octicon octicon-link"></span></a>Thermometer</h1>
+
+<p>This project uses an Adafruit DHT22 and a 4 row HD44780 LCD-Display to turn your Raspberry Pi into a thermometer that tracks the temperature and humidity.</p>
+
+<h2>
+<a id="table-of-contents" class="anchor" href="#table-of-contents" aria-hidden="true"><span class="octicon octicon-link"></span></a>Table of contents</h2>
+
+<ul>
+<li><a href="#preferences">Preferences</a></li>
+<li><a href="#rpi-and-display">RPi and display</a></li>
+<li><a href="#dht22-soldering">DHT22 soldering</a></li>
+<li><a href="#features">Features</a></li>
+</ul>
+
+<h2>
+<a id="preferences" class="anchor" href="#preferences" aria-hidden="true"><span class="octicon octicon-link"></span></a>Preferences</h2>
+
+<ul>
+<li>Raspberry Pi Model B</li>
+<li>Adafruit DHT22</li>
+<li>HD44780 4x20 LCD-Display</li>
+<li>Python 2.7 at your Raspberry Pi</li>
+</ul>
+
+<h2>
+<a id="rpi-and-display" class="anchor" href="#rpi-and-display" aria-hidden="true"><span class="octicon octicon-link"></span></a>RPi and display</h2>
+
+<p>The following Pins on your RPi are used:</p>
+
+<p><img src="/documentation/piPin.png" alt="piPin"></p>
+
+<p>| Pin| Usage                 | Pin| Usage |
+| -- | --------------------- | -- | ----- |
+|  1 | Power DHT22 and LED + | 16 | DATA6 |
+|  2 | Power HD44780         | 18 | DATA5 |
+|  6 | Common Ground (GND)   | 22 | DATA4 |
+|  7 | Data from DHT22       | 24 | E     |
+| 12 | DATA7                 | 26 | RS    |</p>
+
+<p>It is recommended to use a breadboard.</p>
+
+<p>The HD44780:</p>
+
+<p><img src="/documentation/hd44780Pin.png" alt="hd44780Pin"></p>
+
+<p>Connect the pins as shown in the graphic. You can use an additional 10K resistor at 'Contrast'. The LED + could be connected to 5V but in my case it was to bright.</p>
+
+<h2>
+<a id="dht22-soldering" class="anchor" href="#dht22-soldering" aria-hidden="true"><span class="octicon octicon-link"></span></a>DHT22 soldering</h2>
+
+<p>If you have an Adafruit DHT22 without preinstalled resistor, use the following soldering instructions else ignore the soldering and just connect it (Pin 3 is GND then):</p>
+
+<p><img src="/documentation/dht22.png" alt="DHT22"></p>
+
+<p>You have four pins at the DHT22.</p>
+
+<table>
+<thead>
+<tr>
+<th>Pin DHT22</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>3.3 Volt</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Data</td>
+</tr>
+<tr>
+<td>3</td>
+<td>not needed</td>
+</tr>
+<tr>
+<td>4</td>
+<td>GND</td>
+</tr>
+</tbody>
+</table>
+
+<p>You have to solder (or wire on your breadboard) an additional 10k resistor from positive voltage to the wire coming from the data pin.</p>
+
+<h2>
+<a id="features" class="anchor" href="#features" aria-hidden="true"><span class="octicon octicon-link"></span></a>Features</h2>
+
+<ul>
+<li>Auto setup (if needed)</li>
+<li>Collect sensordata</li>
+<li>Print data on display (time, temperature, humidity)</li>
+<li>Reusable class for display</li>
+<li>Hardwareinstructions</li>
+</ul>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/h4llow3En">h4llow3En</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
