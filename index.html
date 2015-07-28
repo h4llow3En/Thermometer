@@ -58,21 +58,56 @@
 
 <p>The following Pins on your RPi are used:</p>
 
-<p><img src="/documentation/piPin.png" alt="piPin"></p>
+<p><img src="./documentation/piPin.png" alt="piPin"></p>
 
-<p>| Pin| Usage                 | Pin| Usage |
-| -- | --------------------- | -- | ----- |
-|  1 | Power DHT22 and LED + | 16 | DATA6 |
-|  2 | Power HD44780         | 18 | DATA5 |
-|  6 | Common Ground (GND)   | 22 | DATA4 |
-|  7 | Data from DHT22       | 24 | E     |
-| 12 | DATA7                 | 26 | RS    |</p>
+<table>
+<thead>
+<tr>
+<th>Pin</th>
+<th>Usage</th>
+<th>Pin</th>
+<th>Usage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Power DHT22 and LED +</td>
+<td>16</td>
+<td>DATA6</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Power HD44780</td>
+<td>18</td>
+<td>DATA5</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Common Ground (GND)</td>
+<td>22</td>
+<td>DATA4</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Data from DHT22</td>
+<td>24</td>
+<td>E</td>
+</tr>
+<tr>
+<td>12</td>
+<td>DATA7</td>
+<td>26</td>
+<td>RS</td>
+</tr>
+</tbody>
+</table>
 
 <p>It is recommended to use a breadboard.</p>
 
 <p>The HD44780:</p>
 
-<p><img src="/documentation/hd44780Pin.png" alt="hd44780Pin"></p>
+<p><img src="./documentation/hd44780Pin.png" alt="hd44780Pin"></p>
 
 <p>Connect the pins as shown in the graphic. You can use an additional 10K resistor at 'Contrast'. The LED + could be connected to 5V but in my case it was to bright.</p>
 
@@ -81,7 +116,7 @@
 
 <p>If you have an Adafruit DHT22 without preinstalled resistor, use the following soldering instructions else ignore the soldering and just connect it (Pin 3 is GND then):</p>
 
-<p><img src="/documentation/dht22.png" alt="DHT22"></p>
+<p><img src="./documentation/dht22.png" alt="DHT22"></p>
 
 <p>You have four pins at the DHT22.</p>
 
@@ -131,6 +166,6 @@
       </footer>
     </div>
     <script src="javascripts/scale.fix.js"></script>
-    
+
   </body>
 </html>
