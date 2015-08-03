@@ -114,7 +114,7 @@ class HD44780(object):
             for cust_char in custom:
                 for char in text[:cust_char.start() - 1 - taken]:
                     message.append(ord(char))
-                message.append(ord(unichr(text[cust_char.end() - 1 - taken])))
+                message.append(ord(unichr(int(text[cust_char.end() - 1 - taken]))))
                 try:
                     text = text[cust_char.end() - taken:]
                 except IndexError:
@@ -133,7 +133,8 @@ class HD44780(object):
                     return
             self._write(message)
         else:
-            self._write(message[:col])
+            length = col if len(message) > col else len(message)
+            self._write(message[:length])
 
 
     def create_char(self, address, bitmap):
@@ -167,7 +168,7 @@ class HD44780(object):
         self._send_byte(self.line[row], rs_command)
 
     def _write(self, charlist):
-        for i in charlist:
+        for i in range(len(charlist)):
             self._send_byte(charlist[i], rs_data)
 
     def _send_byte(self, bits, mode):
