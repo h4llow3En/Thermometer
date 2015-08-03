@@ -7,6 +7,7 @@ import time
 import datetime
 import display
 import imp
+import os
 
 # custom characters
 degree_pat = (
@@ -43,6 +44,8 @@ pin = 4
 
 
 def main():
+    if os.geteuid() != 0:
+        exit("You need to have root privileges to run this script.\nPlease try again, using 'sudo'.\n\nExiting.")
     lcd = display.HD44780()
     lcd.create_char(0, degree_pat)
     lcd.create_char(1, arrow_up_pat)
