@@ -6,7 +6,6 @@ __author__ = 'h4llow3En'
 import time
 import datetime
 import display
-import temperature
 import imp
 
 # custom characters
@@ -44,7 +43,6 @@ pin = 4
 
 
 def main():
-    check_setup()
     lcd = display.HD44780()
     lcd.create_char(0, degree_pat)
     lcd.create_char(1, arrow_up_pat)
@@ -82,6 +80,8 @@ def check_setup():
         import setup
         setup.setup()
 
+check_setup()
+import temperature
 
 if __name__ == '__main__':
     main()
