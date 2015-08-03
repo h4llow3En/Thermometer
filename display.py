@@ -103,7 +103,7 @@ class HD44780(object):
     def command(self, bits):
         self._send_byte(bits, rs_command)
 
-    def send_string(self, text, row=None, ):
+    def send_string(self, text, row=None):
         message = []
         col = self.config.cols
         row = 0 if row is None else row
@@ -120,6 +120,9 @@ class HD44780(object):
                 except IndexError:
                     pass
                 taken = cust_char.end()
+        else:
+            for char in text:
+                message.append(ord(char))
 
         self._select_row(row)
         if self.breaklines:
