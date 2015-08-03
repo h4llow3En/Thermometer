@@ -25,5 +25,5 @@ def setup():
     os.chdir(os.getcwd() + '/../..')
 
     print "Cleaning up"
-    subprocess.call('sudo rm -r bcm2835-1*', shell=True)
-    subprocess.call('sudo rm -r Adafruit-Raspberry-Pi-Python-Code', shell=True)
+    subprocess.call(['sudo', 'rm', '-r', 'bcm2835-1.42.tar.gz', 'bcm2835-1.42/'])
+    subprocess.call(['sudo', 'rm', '-r', 'Adafruit-Raspberry-Pi-Python-Code'])
