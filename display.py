@@ -107,9 +107,11 @@ class HD44780(object):
         message = []
         col = self.config.cols
         row = 0 if row is None else row
-        custom = custom_char.finditer(text)
 
-        if custom is not None:
+        cust = custom_char.search(text)
+
+        if cust is not None:
+            custom = custom_char.finditer(text)
             taken = 0
             for cust_char in custom:
                 for char in text[:cust_char.start() - 1 - taken]:

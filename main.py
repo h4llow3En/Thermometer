@@ -68,7 +68,7 @@ def run(lcd):
 
         lcd.send_string(timestamp, row=0)
         lcd.send_string("Temp: {} \cg:0".format(temp), row=1)
-        lcd.send_string("Humidity: {} %".format(temp), row=2)
+        lcd.send_string("Humidity: {} %".format(hum), row=2)
         time.sleep(5)
 
 
