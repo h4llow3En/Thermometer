@@ -26,13 +26,18 @@ The following Pins on your RPi are used:
 ![piPin](/documentation/piPin.png)
 
 
-| Pin| Usage                 | Pin| Usage |
-| -- | --------------------- | -- | ----- |
-|  1 | Power DHT22 and LED + | 16 | DATA6 |
-|  2 | Power HD44780         | 18 | DATA5 |
-|  6 | Common Ground (GND)   | 22 | DATA4 |
-|  7 | Data from DHT22       | 24 | E     |
-| 12 | DATA7                 | 26 | RS    |
+| Pin | Usage                 |
+| --- | --------------------- |
+|  1  | Power DHT22 and LED + |
+|  2  | Power HD44780         |
+|  6  | Common Ground (GND)   |
+|  7  | Data from DHT22       |
+| 12  | DATA7                 |
+| 16  | DATA6                 |
+| 18  | DATA5                 |
+| 22  | DATA4                 |
+| 24  | E                     |
+| 26  | RS                    |
 
 It is recommended to use a breadboard.
 
