@@ -24,8 +24,8 @@ class HD44780(object):
 
     line = []
 
-    def __init__(self, disp_rs=7, disp_e=8, data_lines=[25, 24, 23, 18], cols=20, rows=4, breaklines=True):
-
+    def __init__(self, disp_rs=7, disp_e=8, data_lines=[25, 24, 23, 18],
+                 cols=20, rows=4, breaklines=True):
         """
         HD44780 controller.
 
@@ -37,7 +37,8 @@ class HD44780(object):
             disp_e:
                 Enable (E). Default: 8.
             data_lines:
-                List of data lines pins in 4 bit mode only. Default: [25, 24, 23, 18].
+                List of data lines pins in 4 bit mode only. Default: \
+                [25, 24, 23, 18].
             rows:
                 Number of display rows. Default: 4.
             cols:
@@ -50,9 +51,9 @@ class HD44780(object):
 
         #  Split data_lines into single vars an
         if len(data_lines) == 4:
-            self.pins = PinConfig(disp_rs=disp_rs, disp_e=disp_e, data4=data_lines[0],
-                                  data5=data_lines[1], data6=data_lines[2],
-                                  data7=data_lines[3])
+            self.pins = PinConfig(disp_rs=disp_rs, disp_e=disp_e,
+                                  data4=data_lines[0], data5=data_lines[1],
+                                  data6=data_lines[2], data7=data_lines[3])
         else:
             raise ValueError('Only 4Bit mode supported')
 
@@ -116,7 +117,8 @@ class HD44780(object):
             for cust_char in custom:
                 for char in text[:cust_char.start() - 1 - taken]:
                     message.append(ord(char))
-                message.append(ord(unichr(int(text[cust_char.end() - 1 - taken]))))
+                message.append(
+                    ord(unichr(int(text[cust_char.end() - 1 - taken]))))
                 try:
                     text = text[cust_char.end() - taken:]
                 except IndexError:
@@ -140,7 +142,6 @@ class HD44780(object):
         else:
             length = col if len(message) > col else len(message)
             self._write(message[:length])
-
 
     def create_char(self, address, bitmap):
         """Create a new character.
@@ -177,7 +178,8 @@ class HD44780(object):
             self._send_byte(charlist[i], rs_data)
 
     def _send_byte(self, bits, mode):
-        """Send the specified value to the display as rs_command or as rs_data"""
+        '''Send the specified value to the\
+         display as rs_command or as rs_data'''
         GPIO.output(self.pins.disp_rs, mode)
         GPIO.output(self.pins.data4, False)
         GPIO.output(self.pins.data5, False)

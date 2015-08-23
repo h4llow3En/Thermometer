@@ -45,7 +45,8 @@ pin = 4
 
 def main():
     if os.geteuid() != 0:
-        exit("You need to have root privileges to run this script.\nPlease try again, using 'sudo'.\n\nExiting.")
+        exit("You need to have root privileges to run this script.\n\
+        Please try again, using 'sudo'.\n\nExiting.")
     lcd = display.HD44780()
     lcd.create_char(0, degree_pat)
     lcd.create_char(1, arrow_up_pat)
@@ -61,7 +62,7 @@ def run(lcd):
         timestamp = str(datetime.datetime.now().strftime("%H:%M"))
         try:
             temp, hum = temperature.get_data(dht, pin)
-            temp, hum = float(int(temp*10))/10, float(int(hum*10))/10
+            temp, hum = float(int(temp * 10)) / 10, float(int(hum * 10)) / 10
             old_temp, old_hum = temp, hum
         except TypeError:
             temp, hum = old_temp, old_hum
