@@ -1,8 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-__author__ = 'h4llow3En'
-
 import time
 import datetime
 import display
@@ -21,15 +19,6 @@ degree_pat = (
     0b00000,
     0b00000,
     0b00000)
-cust_c = (
-    0b01110,
-    0b10001,
-    0b10000,
-    0b10000,
-    0b10000,
-    0b10000,
-    0b10001,
-    0b01110)
 arrow_up_pat = (
     0b00000,
     0b01111,
@@ -55,7 +44,6 @@ pin = 4
 lcd = None
 
 
-
 def main():
     if os.geteuid() != 0:
         exit("You need to have root privileges to run this script.\n\
@@ -64,10 +52,8 @@ def main():
     lcd = display.HD44780()
     lcd.clean()
     lcd.create_char(0, degree_pat)
-    lcd.create_char(1, cust_c)
-    lcd.create_char(2, arrow_up_pat)
-    lcd.create_char(3, arrow_down_pat)
-    lcd.clean()
+    lcd.create_char(1, arrow_up_pat)
+    lcd.create_char(2, arrow_down_pat)
     temperature.dht_init()
     run(lcd)
 
@@ -76,6 +62,7 @@ def kill_all(signal, frame):
     lcd.clean()
     lcd.close()
     sys.exit(0)
+
 
 def run(lcd):
     old_temp = 0
@@ -90,7 +77,7 @@ def run(lcd):
             temp, hum = old_temp, old_hum
 
         lcd.send_string(timestamp, row=0)
-        lcd.send_string("Temp: {} \cg:0\cg:1".format(temp), row=1)
+        lcd.send_string("Temp: {} \cg:0C".format(temp), row=1)
         lcd.send_string("Humidity: {} %".format(hum), row=2)
         time.sleep(5)
 

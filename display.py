@@ -1,5 +1,3 @@
-__author__ = 'h4llow3En'
-
 from collections import namedtuple
 import RPi.GPIO as GPIO
 import time
@@ -9,7 +7,7 @@ cgram_address = 0x40
 rs_command = False
 rs_data = True
 
-custom_char = re.compile("\\cg:[0-7]")
+custom_char = re.compile("^\\cg:{[0-7]}")
 
 
 def e_wait():
@@ -109,24 +107,14 @@ class HD44780(object):
         col = self.config.cols
         row = 0 if row is None else row
 
-        cust = custom_char.search(text)
-
-        if cust is not None:
-            custom = custom_char.finditer(text)
-            taken = 0
-            for cust_char in custom:
-                for char in text[:cust_char.start() - 1 - taken]:
-                    message.append(ord(char))
-                message.append(
-                    ord(unichr(int(text[cust_char.end() - 1 - taken]))))
-                try:
-                    text = text[cust_char.end() - taken:]
-                except IndexError:
-                    pass
-                taken = cust_char.end()
-        else:
-            for char in text:
-                message.append(ord(char))
+        while len(text) > 0:
+            cust = custom_char.match(text)
+            if cust is not None:
+                message.append(ord(unichr(int(cust.group(0)))))
+                text = text[5:]
+            else:
+                message.append(ord(text[0]))
+                text = text[1:]
 
         self._select_row(row)
         if self.breaklines:
